@@ -1,6 +1,11 @@
 <?php
   
 function saveImage($url) {
+  
+  $dir = 'img';
+  if (!file_exists($dir)) {
+    mkdir($dir, 0777, true);
+  }
     
   $ch = curl_init($url);
   curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -9,7 +14,7 @@ function saveImage($url) {
   $raw = curl_exec($ch);
   curl_close($ch);
   
-  $saveto = 'img/'.array_pop(explode('/', $url));
+  $saveto = $dir.'/'.array_pop(explode('/', $url));
   if (file_exists($saveto)) {
     unlink($saveto);
   }
